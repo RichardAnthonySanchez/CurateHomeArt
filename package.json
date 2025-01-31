@@ -2,6 +2,8 @@
   "scripts": {
     "build": "webpack --config webpack.config.js",
     "dev": "webpack serve",
+    "watch": "webpack --watch",
+    "start": "webpack serve --open",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
