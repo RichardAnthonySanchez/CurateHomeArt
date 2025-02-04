@@ -1,3 +1,4 @@
+// find a way to generate pages from product tags
 import markdownContent from "./markdown/index.md";
 import markdownit from "markdown-it";
 import "./styles/styles.css";
