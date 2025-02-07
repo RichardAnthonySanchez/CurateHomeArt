@@ -3,6 +3,7 @@ import fs from "fs";
 import matter from "gray-matter";
 import { join } from "path";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 const postsDirectory = join(process.cwd(), "_posts");
 
 export function getPostSlugs() {
@@ -13,7 +14,12 @@ export function getPostBySlug(slug: string) {
   const realSlug = slug.replace(/\.md$/, "");
   const fullPath = join(postsDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+  let { data, content } = matter(fileContents);
+
+  // Replaces ${basePath} with next.config.js basePath
+  let itemsStr = JSON.stringify(data);
+  itemsStr = itemsStr.replaceAll(/\$\{basePath\}/gi, basePath);
+  data = JSON.parse(itemsStr);
 
   return { ...data, slug: realSlug, content } as Post;
 }
